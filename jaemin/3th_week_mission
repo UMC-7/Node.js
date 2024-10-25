@@ -1,0 +1,114 @@
+### 홈 화면
+
+- **API Endpoint**
+
+<aside>
+🔑 GET /api/home
+
+</aside>
+
+- **Request Header**: Authorization : accessToken (String)
+- **Request Body(수정 필요)**
+
+```json
+{
+	"currentRegion": {현재 위치},
+}
+```
+
+- **Query String**: 불필요
+- **Path Variable**: 불필요
+
+### 마이 페이지 리뷰 작성
+
+- **API Endpoint**
+
+<aside>
+🔑 POST /api/users/{user-id}/reviews
+
+</aside>
+
+- **Request Header**: Authorization : accessToken (String)
+- **Request Body -** [서버에 이미지와 JSON을 함께 업로드하는 방법](https://galid1.tistory.com/721)
+
+```json
+{
+	"userNickname": {사용자 닉네임},
+	"postedDate": {현재 날짜},
+	"rate": {별점},
+	"comments": {리뷰 내용},
+	"image": {사진 정보}
+}
+```
+
+- **Query String**: 불필요
+- **Path Variable**: user-id
+
+### 미션 목록 조회
+
+- **API Endpoint**
+
+<aside>
+🔑 GET /api/users/{user-id}/missions
+
+</aside>
+
+- **Request Header**: Authorization : accessToken (String)
+- **Request Body**
+
+```json
+{
+
+}
+```
+
+- **Query String**: status = “진행 중” - 진행 상태별로 미션들 구분하기 위해서
+- **Path Variable**: user-id
+
+### 미션 성공 누르기
+
+- **API Endpoint**
+
+<aside>
+🔑 PATCH /api/users/{user-id}/missions/{mission-id}
+
+</aside>
+
+- **Request Header**: Authorization : accessToken (String)
+- **Request Body**
+
+```json
+{
+  "status": "진행 완료"
+}
+```
+
+- **Query String**: 불필요
+- **Path Variable**: user-id, mission-id - 여러 개의 미션 목록 중에서 성공 처리한 미션 하나에 대한 구분이 필요
+
+### 회원가입 하기
+
+- **API Endpoint**
+
+<aside>
+🔑 POST /api/users
+
+</aside>
+
+- **Request Header**:
+- **Request Body**
+
+```json
+{
+	"userId": {사용자 ID},
+	"userPassword": {사용자 비밀번호},
+	"userName": {사용자명},
+	"gender": {성별},
+	"birthDate": {생년월일},
+	"userAddress": {사용자 주소},
+	"preferences": {선호 음식 리스트}
+}
+```
+
+- **Query String**: 불필요
+- **Path Variable**: 불필요
