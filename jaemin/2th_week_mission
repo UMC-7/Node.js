@@ -1,0 +1,125 @@
+1. 1주차 때 설계한 데이터베이스를 토대로 아래의 화면에 대한 쿼리를 작성
+
+![내가 진행중, 진행 완료한 미션 모아서 보는 쿼리(페이징 포함)](https://prod-files-secure.s3.us-west-2.amazonaws.com/f1912130-0409-4e90-a90f-6091ae253e73/fb2c37cf-9eb2-4e18-b21c-af42c1dd2cc0/Untitled.png)
+
+내가 진행중, 진행 완료한 미션 모아서 보는 쿼리(페이징 포함)
+
+```sql
+SELECT
+		m.score,
+		um.status,
+		m.description,
+		r.name
+FROM user_mission um
+JOIN mission m ON um.mission_id = m.id
+JOIN restaurant r ON m.restaurant_id = r.id
+WHERE
+		um.user_id = {USER_ID} 
+		AND um.status = '진행중'
+		AND (um.updated_at < {마지막으로 조회한 미션의 날짜})
+ORDER BY um.updated_at DESC
+LIMIT 10;
+
+		
+```
+
+`cursor paging`을 사용하기 위해 날짜순으로 정렬한다고 가정 후, user_mission의 updated_at을 커서로 사용.
+
+![리뷰 작성하는 쿼리,
+* 사진의 경우는 일단 배제](https://prod-files-secure.s3.us-west-2.amazonaws.com/f1912130-0409-4e90-a90f-6091ae253e73/ff64bece-430c-45e4-96fa-de1e40b984db/Untitled.png)
+
+리뷰 작성하는 쿼리,
+* 사진의 경우는 일단 배제
+
+```sql
+SELECT 
+		u.nickname,
+		rv.created_at
+		rv.rate
+		rv.content
+FROM review rv
+JOIN user u ON rv.user_id = u.id
+JOIN restaurant r ON rv.restaurant_id = r.id
+WHERE r.id = {RESTAURANT_ID};
+		
+```
+
+![홈 화면 쿼리
+(현재 선택 된 지역에서 도전이 가능한 미션 목록, 페이징 포함)](https://prod-files-secure.s3.us-west-2.amazonaws.com/f1912130-0409-4e90-a90f-6091ae253e73/6ad90e83-6e2e-4f56-8779-82d16c7f7303/Untitled.png)
+
+홈 화면 쿼리
+(현재 선택 된 지역에서 도전이 가능한 미션 목록, 페이징 포함)
+
+### 지역별 미션 달성 현황
+
+```sql
+SELECT
+		SUM(um.status = '진행완료' THEN 1 ELSE 0 END)
+FROM user_mission um
+JOIN mission m ON um.mission_id = m.id
+JOIN restaurant r ON m.restaurant_id = r.id
+JOIN region reg ON r.current_region = reg.id
+WHERE
+		um.user_id = {USER_ID}
+		AND reg.region_name = {선택한 REGION_NAME};
+```
+
+### My Mission
+
+```sql
+SELECT
+		r.name,
+		r.type,
+		um.deadline,
+		m.description,
+		m.score
+FROM mission m
+JOIN restaurant r ON m.restaurant_id = r.id
+JOIN user_mission um ON um.mission_id = m.id
+JOIN region reg ON reg.id = r.current_region
+WHERE 
+		um.user_id = {USER_ID}
+		AND reg.region_name = {선택한 REGION_NAME} 
+		AND um.status = '진행중'
+		AND (um.updated_at < {마지막으로 조회한 미션의 날짜})
+ORDER BY um.updated_at DESC
+LIMIT 10;
+```
+
+![마이 페이지 화면 쿼리](https://prod-files-secure.s3.us-west-2.amazonaws.com/f1912130-0409-4e90-a90f-6091ae253e73/2d736cd4-e3ab-4c55-9b1d-ad818cc22dbf/Untitled.png)
+
+마이 페이지 화면 쿼리
+
+```sql
+SELECT 
+		u.nickname,
+    u.email_address,
+    CASE 
+        WHEN u.phone_num IS NULL THEN '미인증' 
+        ELSE u.phone_num
+    END u.score
+FROM  user u
+WHERE u.id = {USER_ID};
+    
+    
+```
+
+```sql
+-- COALESCE 함수 활용
+SELECT 
+    u.nickname,
+    u.email_address,
+    COALESCE(u.phone_num, '미인증')
+    -- 전화번호가 없으면 NULL 대신 '미인증' 반환
+FROM user u
+WHERE u.id = {USER_ID};
+```
+
+<aside>
+💡
+
+**COALESCE( )**
+
+리스트에서 NULL이 아닌 첫번째 값을 반환하는 함수 - [사용 방법 및 예시](https://mollangpiu.tistory.com/456)
+
+</aside>

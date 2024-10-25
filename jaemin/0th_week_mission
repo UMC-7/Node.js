@@ -1,0 +1,27 @@
+### Mission 1
+
+1. 브라우저에 접속하려는 너디너리 홈페이지의 도메인 이름([https://demoday.neordinary.co.kr](https://demoday.neordinary.co.kr/))을 입력한다.
+2. 브라우저는 도메인 이름을 활용하기 위해 DNS 서버에 요청하여 이를  IP주소로 변환한다. 
+3. 이 IP 주소를 가지고 내 노트북이라는 Network edge에서 우리집 와이파이(Access Network)를 타고 나가 Network core를 거쳐 너디너리 홈페이지의 서버가 있는 또다른 Network edge에 도달한다.
+    
+     3-1. 위 과정에서의 데이터 전송에는 TCP 연결이 일어나게 되고, 이때 3- way handshake 가 일어난다. 따라서 내 노트북의 브라우저가 서버에 SYN  패킷을 전송하면 서버는 SYN-ACK 패킷을 다시 보내고, 브라우저가 다시 ACK 패킷을 보내는 방식으로 연결이 일어난다.
+    
+    3-2. 또한 이 과정에서 정확하게 너디너리 홈페이지에 접속하기 위해서 포트 번호를 확인하게 된다. (웹사이트기 때문에 80(HTTP) 혹은 443(HTTPS)일 것이다.)
+    
+4. TCP 연결이 이뤄지고 나면 브라우저에서 서버로 웹 페이지를 요청한다.
+5. Web server는 클라이언트(브라우저)의 요청을 받고 HTML, CSS 등의 정적 리소스를 처리하고, WAS는 동적 리소스를 처리한다.
+6. 브라우저는 서버로부터 받은 데이터를 화면에 띄우고 나는 성공적으로 너디너리 홈페이지에 접속한다.
+
+### Mission 2
+
+ #미션을 진행하고 기록을 진행하여 이번 주차는 미션 2에 대한 중간 과정을 충분히 캡처하지 못했다 -_-
+
+먼저 미션에 필요한 VSCode와 Node.js를 설치하였다. 그 후 Git 명령어로 필요한 저장소를 다운로드했다. 그리고 아래와 같이 해당 폴더를 VSCode로 열었다.
+
+![스크린샷 2024-09-23 14.09.33.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f1912130-0409-4e90-a90f-6091ae253e73/ef8e7824-d98f-4863-aecd-d52751bcd5cb/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-09-23_14.09.33.png)
+
+ 다음으로 VSCode의 터미널을 이용해 `npm install` 명령어를 실행하여 Node.js 서버를 실행할 준비를 마쳤다. 
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f1912130-0409-4e90-a90f-6091ae253e73/b6294ab4-bff7-449c-876c-d6a4da77b60d/image.png)
+
+ 마지막으로 `npm run start` 를 통해 서버를 실행하고 safari로 localhost:3000에 접속해 미션을 정상 수행했음을 확인하였다.
