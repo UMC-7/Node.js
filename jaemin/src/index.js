@@ -2,6 +2,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import { handleUserSignUp } from "./controllers/user.controller.js";
+import { handleAddRestaurant } from "./controllers/restaurant.controller.js"; // 가게 추가 컨트롤러 추가
+import { handleAddReview } from "./controllers/review.controller.js";
+import { handleAddMission } from "./controllers/mission.controller.js";
+import { handleStartMission } from "./controllers/user_mission.controller.js";
 
 dotenv.config();
 
@@ -18,6 +22,10 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api/v1/users/signup", handleUserSignUp);
+app.post("/api/v1/restaurants", handleAddRestaurant); // 가게 추가 API
+app.post("/api/v1/reviews", handleAddReview);
+app.post("/api/v1/missions", handleAddMission);
+app.post("/api/v1/user_missions", handleStartMission);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

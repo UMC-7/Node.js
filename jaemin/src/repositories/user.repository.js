@@ -80,7 +80,7 @@ export const setPreference = async (userId, foodCategoryId) => {
   }
 };
 
-// 사용자 선호 카테고리 반환
+// 사용자 선호 카테고리 반환 (DB에 맞게 수정 필요)
 export const getUserPreferencesByUserId = async (userId) => {
   const conn = await pool.getConnection();
 
